@@ -23,11 +23,11 @@ limitations under the License.
 #include <stdint.h>
 
 static void print_bytes_sep(const char *msg,const unsigned char *buf, unsigned int size, const char m2[], const char sep[]){
-    unsigned int i;
-    printf("%s",msg);
-    for(i=0;i<size-1;i++) printf("%02X%s",buf[i],sep);
-    if(i<size) printf("%02X",buf[i]);
-    printf("%s", m2);
+	unsigned int i;
+	printf("%s",msg);
+	for(i=0;i<size-1;i++) printf("%02X%s",buf[i],sep);
+	if(i<size) printf("%02X",buf[i]);
+	printf("%s", m2);
 }
 static void print_bytes(const char m[],const uint8_t *buf, unsigned int size, const char m2[]){print_bytes_sep(m,buf,size,m2," ");}
 static void println_bytes(const char m[],const uint8_t *buf, unsigned int size){print_bytes(m,buf,size,"\n");}
@@ -60,21 +60,21 @@ int is_hex_digit(char c){
 void hexstr_to_bytes(unsigned int size_in_bytes, void *dst, const char * const hexstr){
 	unsigned int char_index = 0;
 	unsigned int hexdigit_cnt=0;
-  uint8_t* dst_bytes = (uint8_t*)dst;
-  memset(dst,0,size_in_bytes);
+	uint8_t* dst_bytes = (uint8_t*)dst;
+	memset(dst,0,size_in_bytes);
 	while(hexdigit_cnt<size_in_bytes*2){
 		char c = hexstr[char_index++];
-    if(0==c) {
-      printf("\nERROR: could not find %d hex digits in string '%s'.\n",size_in_bytes*2,hexstr);
-      printf("char_index=%d, hexdigit_cnt=%d\n",char_index,hexdigit_cnt);
-      exit(-1);
-    }
-    if(is_hex_digit(c)) {
-      unsigned int shift = 4 - 4*(hexdigit_cnt & 1);
-		  uint8_t nibble = hexdigit_value(c);	
-		  dst_bytes[hexdigit_cnt/2] |= nibble << shift;
-      hexdigit_cnt++;
-    }
+		if(0==c) {
+			printf("\nERROR: could not find %d hex digits in string '%s'.\n",size_in_bytes*2,hexstr);
+			printf("char_index=%d, hexdigit_cnt=%d\n",char_index,hexdigit_cnt);
+			exit(-1);
+		}
+		if(is_hex_digit(c)) {
+			unsigned int shift = 4 - 4*(hexdigit_cnt & 1);
+			uint8_t nibble = hexdigit_value(c);	
+			dst_bytes[hexdigit_cnt/2] |= nibble << shift;
+			hexdigit_cnt++;
+		}
 	}
 }
 
@@ -86,16 +86,15 @@ void bytes_to_hexstr(char *dst,uint8_t *bytes, unsigned int nBytes){
 }
 
 void assert_equal_bytes(const uint8_t *const a, const uint8_t *const b, unsigned int size_in_bytes){
-  for(unsigned int i=0;i<size_in_bytes;i++){
-    if(a[i]!=b[i]){
-      printf("\nERROR: assertion failed.\n");
-      print_bytes_sep("a=",a,size_in_bytes,"\n"," ");
+	for(unsigned int i=0;i<size_in_bytes;i++){
+		if(a[i]!=b[i]){
+			printf("\nERROR: assertion failed.\n");
+			print_bytes_sep("a=",a,size_in_bytes,"\n"," ");
 			print_bytes_sep("b=",b,size_in_bytes,"\n"," ");
 			printf("a[%u]=0x%02X\nb[%u]=0x%02X\n",i,a[i],i,b[i]);
-			
-      exit(-2);
-    }
-  }
+			exit(-2);
+		}
+	}
 }
 
 typedef struct testvector_struct {
@@ -107,12 +106,12 @@ typedef struct testvector_struct {
 
 static const char * testvectors[] = {
 	//test vectors from original Prince paper (http://eprint.iacr.org/2012/529.pdf)
-  "     plain              k0               k1             cipher     ",
-  "0000000000000000 0000000000000000 0000000000000000 818665aa0d02dfda",
-  "ffffffffffffffff 0000000000000000 0000000000000000 604ae6ca03c20ada",
-  "0000000000000000 ffffffffffffffff 0000000000000000 9fb51935fc3df524",
-  "0000000000000000 0000000000000000 ffffffffffffffff 78a54cbe737bb7ef",
-  "0123456789abcdef 0000000000000000 fedcba9876543210 ae25ad3ca8fa9ccf",
+	"     plain              k0               k1             cipher     ",
+	"0000000000000000 0000000000000000 0000000000000000 818665aa0d02dfda",
+	"ffffffffffffffff 0000000000000000 0000000000000000 604ae6ca03c20ada",
+	"0000000000000000 ffffffffffffffff 0000000000000000 9fb51935fc3df524",
+	"0000000000000000 0000000000000000 ffffffffffffffff 78a54cbe737bb7ef",
+	"0123456789abcdef 0000000000000000 fedcba9876543210 ae25ad3ca8fa9ccf",
 	//custom test vectors from here, cipher values generated with prince_ref.h !
 	"0123456789ABCDEF 0011223344556677 8899AABBCCDDEEFF D6DCB5978DE756EE",
 	"0123456789ABCDEF 0112233445566778 899AABBCCDDEEFF0 392F599F46761CD3",
@@ -132,34 +131,34 @@ static const char * testvectors[] = {
 	}while(0)
 #include "prince_ref.h"
 int basic_test(void){
-  for(int i=1;i<sizeof(testvectors)/sizeof(char*);i++){
-    testvector_t tv;
-    hexstr_to_bytes(sizeof(tv), &tv, testvectors[i]);
-    printf("test vector %d\n",i);
-    print_64  ( "plain:",tv.plain ," ");
-    print_64  (    "k0:",tv.k0    ," ");
-    print_64  (    "k1:",tv.k1    ," ");
-    println_64("cipher:",tv.cipher);
-    printf("encryption:\n");
-    uint8_t result[8];
-    uint8_t key[16];
-    memcpy(key  ,tv.k0,8);
-    memcpy(key+8,tv.k1,8);
+	for(int i=1;i<sizeof(testvectors)/sizeof(char*);i++){
+		testvector_t tv;
+		hexstr_to_bytes(sizeof(tv), &tv, testvectors[i]);
+		printf("test vector %d\n",i);
+		print_64  ( "plain:",tv.plain ," ");
+		print_64  (    "k0:",tv.k0    ," ");
+		print_64  (    "k1:",tv.k1    ," ");
+		println_64("cipher:",tv.cipher);
+		printf("encryption:\n");
+		uint8_t result[8];
+		uint8_t key[16];
+		memcpy(key  ,tv.k0,8);
+		memcpy(key+8,tv.k1,8);
 		println_128("key:",key);
-    prince_encrypt(tv.plain,key,result);
-    assert_equal_bytes(tv.cipher,result,8);
-    printf("decryption:\n");
-    prince_decrypt(tv.cipher,key,result);
-    assert_equal_bytes(tv.plain,result,8);
-  }
-  return TEST_PASS;
+		prince_encrypt(tv.plain,key,result);
+		assert_equal_bytes(tv.cipher,result,8);
+		printf("decryption:\n");
+		prince_decrypt(tv.cipher,key,result);
+		assert_equal_bytes(tv.plain,result,8);
+	}
+	return TEST_PASS;
 }
 
 int main(void){
-    if(TEST_PASS==basic_test()){
-      printf("Basic Test PASS\n");
-    } else {
-      printf("Basic Test FAIL\n");
-    }
-    return 0;
+	if(TEST_PASS==basic_test()){
+		printf("Basic Test PASS\n");
+	} else {
+		printf("Basic Test FAIL\n");
+	}
+	return 0;
 }
