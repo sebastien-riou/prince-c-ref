@@ -4,8 +4,6 @@ os:
   - linux
 #  - osx
 
-language: c
-
 compiler:
   - gcc
 #  - clang
@@ -16,31 +14,26 @@ matrix:
         compiler: gcc
 
 sudo: false
-
-env:
-  - CXX=g++-4.8
-
+language: cpp
+compiler:
+  - gcc
+  - clang
+install:
+- if [ "$CXX" = "g++" ]; then export CXX="g++-5.1" CC="gcc-5.1"; fi
 addons:
   apt:
     sources:
-      - ubuntu-toolchain-r-test
+    - ubuntu-toolchain-r-test
     packages:
-      - dc
-      - binutils
-      - cabextract
-      - libcurl4-openssl-dev
-      - libelf-dev
-      - libdw-dev
-      - jq
-      - gcc-4.8
-      - g++-4.8
-
-cache:
-  - ccache
-  - apt
+    - gcc-5.1
+    - g++-5.1
+    - clang
 
 script:
   - ./build_test.sh
   - ls
+  - g++ --version
+  - $CXX --version
+  - $CC --version
   - ./prince-c-ref
 
