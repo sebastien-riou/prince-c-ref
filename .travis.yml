@@ -2,13 +2,13 @@
 
 os:
   - linux
-  - osx
+#  - osx
 
 language: c
 
 compiler:
   - gcc
-  - clang
+#  - clang
 
 matrix:
   exclude:
@@ -18,7 +18,7 @@ matrix:
 sudo: false
 
 script:
-  - build_test.sh
+  - ./build_test.sh
   - ls
-  - prince-c-ref
+  - ./prince-c-ref
 
