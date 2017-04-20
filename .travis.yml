@@ -19,5 +19,6 @@ sudo: false
 
 script:
   - build_test.sh
+  - ls
   - prince-c-ref
 
