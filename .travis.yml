@@ -15,18 +15,16 @@ matrix:
 
 sudo: false
 language: cpp
-compiler:
-  - gcc
-  - clang
+
 install:
-- if [ "$CXX" = "g++" ]; then export CXX="g++-5.1" CC="gcc-5.1"; fi
+- if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
 addons:
   apt:
     sources:
     - ubuntu-toolchain-r-test
     packages:
-    - gcc-5.1
-    - g++-5.1
+    - gcc-4.8
+    - g++-4.8
     - clang
 
 script:
