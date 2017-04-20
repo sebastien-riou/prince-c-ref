@@ -159,6 +159,7 @@ int main(void){
 		printf("Basic Test PASS\n");
 	} else {
 		printf("Basic Test FAIL\n");
+        return -1;
 	}
-	return 0;
+	return -1;
 }
