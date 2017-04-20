@@ -17,6 +17,28 @@ matrix:
 
 sudo: false
 
+env:
+  - CXX=g++-4.8
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - dc
+      - binutils
+      - cabextract
+      - libcurl4-openssl-dev
+      - libelf-dev
+      - libdw-dev
+      - jq
+      - gcc-4.8
+      - g++-4.8
+
+cache:
+  - ccache
+  - apt
+
 script:
   - ./build_test.sh
   - ls
