@@ -1,4 +1,5 @@
-# prince-c-ref
+[![Build Status](https://travis-ci.org/sebastien-riou/prince-c-ref.svg?branch=master)](https://travis-ci.org/sebastien-riou/prince-c-ref)
+# prince-c-ref 
 Reference implementation of the Prince block cipher, complient to C99.
 'Reference' here means straightforward, unoptimized, and checked against the few test vectors provided in the original paper (http://eprint.iacr.org/2012/529.pdf).
 Some interesting features:
