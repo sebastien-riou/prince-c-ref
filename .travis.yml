@@ -2,6 +2,7 @@
 
 os:
   - linux
+  - osx
 
 language: c
 
@@ -15,16 +16,6 @@ matrix:
         compiler: gcc
 
 sudo: false
-
-env:
-  - CXX=g++-4.8
-
-addons:
-  apt:
-    sources:
-    packages:
-      - gcc-4.8
-      - g++-4.8
 
 script:
   - build_test.sh
