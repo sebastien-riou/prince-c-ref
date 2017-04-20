@@ -13,6 +13,6 @@ Note that a python implementation is available here https://github.com/weedegee/
 
 ## Documentation
 A Doxygen config file is in the "doxygen" folder. You can generate doc by invoking "doxygen config" from that directory. It will generate a host of information about the code.
-For example the figure below is the call graph of the byte oriented to level function:
+For example the figure below is the call graph of the byte oriented function:
 ![alt tag](prince-c-ref.png)
 
