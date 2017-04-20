@@ -27,6 +27,6 @@ addons:
       - g++-4.8
 
 script:
-  - build.sh
+  - build_test.sh
   - prince-c-ref
 
