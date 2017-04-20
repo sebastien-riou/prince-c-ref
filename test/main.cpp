@@ -155,11 +155,11 @@ int basic_test(void){
 }
 
 int main(void){
-	if(TEST_PASS==basic_test()){
-		printf("Basic Test PASS\n");
-	} else {
-		printf("Basic Test FAIL\n");
+    if(TEST_PASS==basic_test()){
+        printf("Basic Test PASS\n");
+    } else {
+        printf("Basic Test FAIL\n");
         return -1;
-	}
-	return -1;
+    }
+    return 0;
 }
