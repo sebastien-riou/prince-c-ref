@@ -77,7 +77,7 @@ static uint64_t prince_round_constant(const unsigned int round){
 }
 
 /**
- * The 4 bit Prince sbox. Only the 4 lsb are takken into account.
+ * The 4 bit Prince sbox. Only the 4 lsb are taken into account.
  */
 static unsigned int prince_sbox(unsigned int nibble){
   const unsigned int sbox[] = {
@@ -90,7 +90,7 @@ static unsigned int prince_sbox(unsigned int nibble){
 }
 
 /**
- * The 4 bit Prince inverse sbox. Only the 4 lsb are takken into account.
+ * The 4 bit Prince inverse sbox. Only the 4 lsb are taken into account.
  */
 static unsigned int prince_sbox_inv(unsigned int nibble){
   const unsigned int sbox[] = {
