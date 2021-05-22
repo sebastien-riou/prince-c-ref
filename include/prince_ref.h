@@ -34,8 +34,8 @@ limitations under the License.
 static uint64_t bytes_to_uint64(const uint8_t in[8]){
   uint64_t out=0;
   unsigned int i;
-  for(i=0;i<8;i++) 
-    out = (out<<8) | in[i];  
+  for(i=0;i<8;i++)
+    out = (out<<8) | in[i];
   return out;
 }
 
@@ -82,7 +82,7 @@ static uint64_t prince_round_constant(const unsigned int round){
 static unsigned int prince_sbox(unsigned int nibble){
   const unsigned int sbox[] = {
     0xb, 0xf, 0x3, 0x2,
-    0xa, 0xc, 0x9, 0x1, 
+    0xa, 0xc, 0x9, 0x1,
     0x6, 0x7, 0x8, 0x0,
     0xe, 0x5, 0xd, 0x4
   };
@@ -95,7 +95,7 @@ static unsigned int prince_sbox(unsigned int nibble){
 static unsigned int prince_sbox_inv(unsigned int nibble){
   const unsigned int sbox[] = {
     0xb, 0x7, 0x3, 0x2,
-    0xf, 0xd, 0x8, 0x9, 
+    0xf, 0xd, 0x8, 0x9,
     0xa, 0x6, 0x4, 0x0,
     0x5, 0xe, 0xc, 0x1
   };
@@ -171,39 +171,39 @@ static uint64_t prince_m_prime_layer(const uint64_t m_prime_in){
   //for(unsigned int i=0;i<16;i++) PRINCE_PRINT(m16[0][i]);
   //for(unsigned int i=0;i<16;i++) PRINCE_PRINT(m16[1][i]);
   static const uint64_t m16[2][16] = {
-    {   0x0111,                                                                                                                                                                        
-        0x2220,                                                                                                                                                                        
-        0x4404,                                                                                                                                                                        
-        0x8088,                                                                                                                                                                        
-        0x1011,                                                                                                                                                                        
-        0x0222,                                                                                                                                                                        
-        0x4440,                                                                                                                                                                        
-        0x8808,                                                                                                                                                                        
-        0x1101,                                                                                                                                                                        
-        0x2022,                                                                                                                                                                        
-        0x0444,                                                                                                                                                                        
-        0x8880,                                                                                                                                                                        
-        0x1110,                                                                                                                                                                        
-        0x2202,                                                                                                                                                                        
-        0x4044,                                                                                                                                                                        
+    {   0x0111,
+        0x2220,
+        0x4404,
+        0x8088,
+        0x1011,
+        0x0222,
+        0x4440,
+        0x8808,
+        0x1101,
+        0x2022,
+        0x0444,
+        0x8880,
+        0x1110,
+        0x2202,
+        0x4044,
         0x0888},
-    
-    {   0x1110,                                                                                                                                                                        
-        0x2202,                                                                                                                                                                        
-        0x4044,                                                                                                                                                                        
-        0x0888,                                                                                                                                                                        
-        0x0111,                                                                                                                                                                        
-        0x2220,                                                                                                                                                                        
-        0x4404,                                                                                                                                                                        
-        0x8088,                                                                                                                                                                        
-        0x1011,                                                                                                                                                                        
-        0x0222,                                                                                                                                                                        
-        0x4440,                                                                                                                                                                        
-        0x8808,                                                                                                                                                                        
-        0x1101,                                                                                                                                                                        
-        0x2022,                                                                                                                                                                        
-        0x0444,                                                                                                                                                                        
-        0x8880} 
+
+    {   0x1110,
+        0x2202,
+        0x4044,
+        0x0888,
+        0x0111,
+        0x2220,
+        0x4404,
+        0x8088,
+        0x1011,
+        0x0222,
+        0x4440,
+        0x8808,
+        0x1101,
+        0x2022,
+        0x0444,
+        0x8880}
   };
   const uint64_t chunk0 = gf2_mat_mult16_1(m_prime_in>>(0*16),m16[0]);
   const uint64_t chunk1 = gf2_mat_mult16_1(m_prime_in>>(1*16),m16[1]);
@@ -218,8 +218,8 @@ static uint64_t prince_m_prime_layer(const uint64_t m_prime_in){
  */
 static uint64_t prince_shift_rows(const uint64_t in, int inverse){
   const uint64_t row_mask = UINT64_C(0xF000F000F000F000);
-  uint64_t shift_rows_out = 0;
-  for(unsigned int i=0;i<4;i++){
+  uint64_t shift_rows_out = in & row_mask;
+  for(unsigned int i=1;i<4;i++){
     const uint64_t row = in & (row_mask>>(4*i));
     const unsigned int shift = inverse ? i*16 : 64-i*16;
     shift_rows_out |= (row>>shift) | (row<<(64-shift));
@@ -265,7 +265,7 @@ static uint64_t prince_core(const uint64_t core_input, const uint64_t k1){
   const uint64_t m_prime_out = prince_m_prime_layer(middle_round_s_out);
   PRINCE_PRINT(m_prime_out);
   const uint64_t middle_round_s_inv_out = prince_s_inv_layer(m_prime_out);
-  round_input = middle_round_s_inv_out;  
+  round_input = middle_round_s_inv_out;
   for(unsigned int round = 6; round < 11; round++){
     PRINCE_PRINT(round_input);
     const uint64_t m_inv_in = round_input ^ k1 ^ prince_round_constant(round);
@@ -291,10 +291,10 @@ static uint64_t prince_enc_dec_uint64(const uint64_t input,const uint64_t enc_k0
   const uint64_t k0       = decrypt ? enc_k0_prime : enc_k0;
   const uint64_t k0_prime = decrypt ? enc_k0       : enc_k0_prime;
   PRINCE_PRINT(k0);
-  PRINCE_PRINT(input); 
+  PRINCE_PRINT(input);
   const uint64_t core_input = input ^ k0;
   const uint64_t core_output = prince_core(core_input,k1);
-  const uint64_t output = core_output ^ k0_prime; 
+  const uint64_t output = core_output ^ k0_prime;
   PRINCE_PRINT(k0_prime);
   PRINCE_PRINT(output);
   return output;
@@ -329,7 +329,6 @@ static void prince_encrypt(const uint8_t in_bytes[8],const uint8_t key_bytes[16]
  */
 static void prince_decrypt(const uint8_t in_bytes[8],const uint8_t key_bytes[16], uint8_t out_bytes[8]){
   prince_enc_dec(in_bytes,key_bytes,out_bytes,1);
-  uint64_t m16[2][16];
 }
 
 #endif //__PRINCE_REF_H__

@@ -49,7 +49,7 @@ int hexdigit_value(char c){
 	int nibble = -1;
 	if(('0'<=c) && (c<='9')) nibble = c-'0';
 	if(('a'<=c) && (c<='f')) nibble = c-'a' + 10;
-	if(('A'<=c) && (c<='F')) nibble = c-'A' + 10;	
+	if(('A'<=c) && (c<='F')) nibble = c-'A' + 10;
 	return nibble;
 }
 
@@ -71,7 +71,7 @@ void hexstr_to_bytes(unsigned int size_in_bytes, void *dst, const char * const h
 		}
 		if(is_hex_digit(c)) {
 			unsigned int shift = 4 - 4*(hexdigit_cnt & 1);
-			uint8_t nibble = hexdigit_value(c);	
+			uint8_t nibble = hexdigit_value(c);
 			dst_bytes[hexdigit_cnt/2] |= nibble << shift;
 			hexdigit_cnt++;
 		}
@@ -117,7 +117,7 @@ static const char * testvectors[] = {
 	"0123456789ABCDEF 0112233445566778 899AABBCCDDEEFF0 392F599F46761CD3",
 	"F0123456789ABCDE 0112233445566778 899AABBCCDDEEFF0 4FB5E332B9B409BB",
 	"69C4E0D86A7B0430 D8CDB78070B4C55A 818665AA0D02DFDA 43C6B256D79DE7E8"
-};   
+};
 
 #define STR_EXPAND(tok) #tok
 #define STR(tok) STR_EXPAND(tok)
@@ -131,7 +131,9 @@ static const char * testvectors[] = {
 	}while(0)
 #include "prince_ref.h"
 int basic_test(void){
-	for(int i=1;i<sizeof(testvectors)/sizeof(char*);i++){
+  (void) println_bytes;
+	(void) prince_m16_matrices;
+	for(unsigned int i=1;i<sizeof(testvectors)/sizeof(char*);i++){
 		testvector_t tv;
 		hexstr_to_bytes(sizeof(tv), &tv, testvectors[i]);
 		printf("test vector %d\n",i);
